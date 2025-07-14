@@ -1,0 +1,265 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Ecosmetic Inventario{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 mb-0">
+                <i class="fas fa-tachometer-alt text-primary"></i>
+                Dashboard de Inventario
+            </h1>
+            <div class="text-muted">
+                <i class="fas fa-calendar"></i>
+                Última actualización: {{ "now"|date:"d/m/Y H:i" }}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estadísticas Principales -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Total Productos
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_productos }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-soap fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Jabones Frutales
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_jabones_frutales }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-lemon fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-pink shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-pink text-uppercase mb-1">
+                            Jabones Florales
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_jabones_florales }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-flower fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Jabones Playeros
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ total_jabones_playeros }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-umbrella-beach fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Acciones Rápidas -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card shadow">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">
+                    <i class="fas fa-plus-circle"></i>
+                    Acciones Rápidas
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'agregar_jabon_frutal' %}" class="btn btn-warning btn-lg btn-block">
+                            <i class="fas fa-plus"></i>
+                            Agregar Jabón Frutal
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'agregar_jabon_floral' %}" class="btn btn-pink btn-lg btn-block">
+                            <i class="fas fa-plus"></i>
+                            Agregar Jabón Floral
+                        </a>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <a href="{% url 'JabonPlayero_new' %}" class="btn btn-info btn-lg btn-block">
+                            <i class="fas fa-plus"></i>
+                            Agregar Jabón Playero
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Navegación por Categorías -->
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-warning h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-lemon"></i>
+                    Jabones Frutales
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Gestiona tu inventario de jabones con fragancias frutales.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'listar_jabones_frutales' %}" class="btn btn-light">
+                        <i class="fas fa-list"></i> Ver Todos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-pink h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-flower"></i>
+                    Jabones Florales
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Administra jabones con esencias florales y delicadas.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'listar_jabones_florales' %}" class="btn btn-light">
+                        <i class="fas fa-list"></i> Ver Todos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card text-white bg-info h-100">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-umbrella-beach"></i>
+                    Jabones Playeros
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Controla jabones con fragancias marinas y veraniegas.</p>
+                <div class="d-grid gap-2">
+                    <a href="{% url 'listar_jabones_playeros' %}" class="btn btn-light">
+                        <i class="fas fa-list"></i> Ver Todos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Utilidades -->
+<div class="row mt-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-search fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Buscar Producto</h5>
+                <p class="card-text">Encuentra rápidamente cualquier jabón por su ID.</p>
+                <a href="{% url 'busqueda_jabon' %}" class="btn btn-primary">
+                    <i class="fas fa-search"></i> Buscar
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-cog fa-3x text-secondary mb-3"></i>
+                <h5 class="card-title">Panel Administrativo</h5>
+                <p class="card-text">Accede al panel de administración de Django.</p>
+                <a href="/admin/" target="_blank" class="btn btn-secondary">
+                    <i class="fas fa-external-link-alt"></i> Admin
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+.border-left-pink {
+    border-left: 0.25rem solid #e83e8c !important;
+}
+.bg-pink {
+    background-color: #e83e8c !important;
+}
+.btn-pink {
+    background-color: #e83e8c;
+    border-color: #e83e8c;
+    color: white;
+}
+.btn-pink:hover {
+    background-color: #d91a72;
+    border-color: #d91a72;
+    color: white;
+}
+.text-pink {
+    color: #e83e8c !important;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+</style>
+{% endblock %}

@@ -1,0 +1,168 @@
+/* Estilos personalizados para Ecosmetic Inventario */
+
+/* Colores personalizados */
+:root {
+    --pink-primary: #e83e8c;
+    --pink-hover: #d91a72;
+    --warning-light: #fff3cd;
+    --info-light: #d1ecf1;
+    --success-light: #d4edda;
+    --danger-light: #f8d7da;
+}
+
+/* Botones personalizados */
+.btn-pink {
+    background-color: var(--pink-primary);
+    border-color: var(--pink-primary);
+    color: white;
+}
+
+.btn-pink:hover {
+    background-color: var(--pink-hover);
+    border-color: var(--pink-hover);
+    color: white;
+}
+
+.btn-pink:focus {
+    box-shadow: 0 0 0 0.2rem rgba(232, 62, 140, 0.25);
+}
+
+/* Cards con bordes de color */
+.border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+}
+
+.border-left-warning {
+    border-left: 0.25rem solid #f6c23e !important;
+}
+
+.border-left-info {
+    border-left: 0.25rem solid #36b9cc !important;
+}
+
+.border-left-pink {
+    border-left: 0.25rem solid var(--pink-primary) !important;
+}
+
+/* Backgrounds personalizados */
+.bg-pink {
+    background-color: var(--pink-primary) !important;
+}
+
+/* Textos de color */
+.text-pink {
+    color: var(--pink-primary) !important;
+}
+
+/* Sombras personalizadas */
+.shadow-pink {
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(232, 62, 140, 0.15) !important;
+}
+
+/* Cards de productos */
+.product-card {
+    transition: transform 0.2s ease-in-out;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+/* Badges de stock */
+.stock-badge {
+    font-size: 0.75rem;
+    padding: 0.375rem 0.75rem;
+}
+
+/* Alertas personalizadas */
+.alert-custom {
+    border-radius: 0.5rem;
+    border: none;
+}
+
+/* Formularios mejorados */
+.form-control:focus {
+    border-color: var(--pink-primary);
+    box-shadow: 0 0 0 0.2rem rgba(232, 62, 140, 0.25);
+}
+
+/* Navegación */
+.navbar-brand {
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+/* Utilidades responsive */
+@media (max-width: 768px) {
+    .btn-block {
+        display: block;
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Iconos de dashboard */
+.dashboard-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.8;
+}
+
+/* Estados de stock visual */
+.stock-high {
+    color: #28a745;
+    background-color: var(--success-light);
+}
+
+.stock-medium {
+    color: #ffc107;
+    background-color: var(--warning-light);
+}
+
+.stock-low {
+    color: #dc3545;
+    background-color: var(--danger-light);
+}
+
+/* Mejoras en tablas */
+.table th {
+    border-top: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Cards de categorías */
+.category-card {
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.category-card:hover {
+    transform: scale(1.02);
+}

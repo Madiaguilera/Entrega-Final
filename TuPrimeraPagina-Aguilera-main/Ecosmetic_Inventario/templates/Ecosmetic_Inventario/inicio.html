@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}Bienvenido - Ecosmetic Inventario{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8 text-center">
+        <div class="py-5">
+            <h1 class="display-3 fw-bold text-primary mb-4">💄 Ecosmetic</h1>
+            <h2 class="h3 text-muted mb-4">Sistema de Inventario de Cosméticos</h2>
+            <p class="lead mb-5">
+                Gestiona tu inventario de productos de belleza de manera profesional y eficiente. 
+                Controla stock, precios, vencimientos y mucho más.
+            </p>
+            
+            <div class="d-grid gap-3 d-md-block">
+                <a href="{% url 'inicio' %}" class="btn btn-pink btn-lg px-5">
+                    Acceder al Sistema
+                </a>
+                <a href="#features" class="btn btn-outline-secondary btn-lg px-5 ms-md-3">
+                    Conocer más
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="features" class="row mt-5 pt-5 border-top">
+    <div class="col-12">
+        <h3 class="text-center mb-5">¿Por qué elegir Ecosmetic?</h3>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+        <div class="feature-icon mb-3">
+            <i class="fas fa-box-open fa-3x text-pink"></i>
+        </div>
+        <h5>Control de Inventario</h5>
+        <p class="text-muted">Mantén un registro detallado de todos tus productos cosméticos con alertas de stock bajo.</p>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+        <div class="feature-icon mb-3">
+            <i class="fas fa-calendar-alt fa-3x text-pink"></i>
+        </div>
+        <h5>Control de Vencimientos</h5>
+        <p class="text-muted">Nunca pierdas productos por vencimiento con nuestro sistema de alertas automáticas.</p>
+    </div>
+    <div class="col-md-4 text-center mb-4">
+        <div class="feature-icon mb-3">
+            <i class="fas fa-chart-line fa-3x text-pink"></i>
+        </div>
+        <h5>Reportes y Análisis</h5>
+        <p class="text-muted">Obtén insights valiosos sobre tu inventario y toma decisiones informadas.</p>
+    </div>
+</div>
+{% endblock %}

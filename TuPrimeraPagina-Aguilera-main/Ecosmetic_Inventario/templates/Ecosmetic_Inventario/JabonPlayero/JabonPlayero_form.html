@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Editar{% else %}Crear{% endif %} Jabón Playero - Ecosmetic Inventario
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-umbrella-beach"></i>
+                    {% if object %}
+                        Editar Jabón Playero
+                    {% else %}
+                        Crear Nuevo Jabón Playero
+                    {% endif %}
+                </h3>
+            </div>
+            
+            <div class="card-body">
+                {% if object %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    Editando el jabón playero: <strong>{{ object.nombre }}</strong> (ID: {{ object.id }})
+                </div>
+                {% endif %}
+                
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    
+                    <!-- Campo Nombre -->
+                    <div class="mb-3">
+                        <label for="{{ form.nombre.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-soap text-info"></i>
+                            {{ form.nombre.label }}
+                        </label>
+                        {{ form.nombre }}
+                        {% if form.nombre.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.nombre.errors %}
+                                    <small><i class="fas fa-exclamation-triangle"></i> {{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Ingresa un nombre descriptivo para el jabón playero (ej: "Brisa Marina", "Coco Tropical")
+                        </small>
+                    </div>
+                    
+                    <!-- Campo Precio -->
+                    <div class="mb-3">
+                        <label for="{{ form.precio.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-dollar-sign text-success"></i>
+                            {{ form.precio.label }}
+                        </label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            {{ form.precio }}
+                        </div>
+                        {% if form.precio.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.precio.errors %}
+                                    <small><i class="fas fa-exclamation-triangle"></i> {{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Precio por unidad en pesos (ej: 15.99)
+                        </small>
+                    </div>
+                    
+                    <!-- Campo Cantidad -->
+                    <div class="mb-3">
+                        <label for="{{ form.cantidad.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-boxes text-warning"></i>
+                            {{ form.cantidad.label }}
+                        </label>
+                        {{ form.cantidad }}
+                        {% if form.cantidad.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.cantidad.errors %}
+                                    <small><i class="fas fa-exclamation-triangle"></i> {{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Cantidad actual en stock. Recomendado: mantener más de 10 unidades.
+                        </small>
+                    </div>
+                    
+                    <!-- Botones de acción -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                        <a href="{% url 'JabonPlayero' %}" class="btn btn-secondary me-md-2">
+                            <i class="fas fa-times"></i>
+                            Cancelar
+                        </a>
+                        <button type="submit" class="btn btn-info">
+                            <i class="fas fa-save"></i>
+                            {% if object %}Actualizar{% else %}Crear{% endif %} Jabón
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Información adicional -->
+        <div class="alert alert-light mt-4">
+            <h6 class="alert-heading">
+                <i class="fas fa-lightbulb text-warning"></i>
+                Consejos para Jabones Playeros
+            </h6>
+            <ul class="mb-0">
+                <li>Los jabones playeros tienen mayor demanda en verano</li>
+                <li>Precios recomendados: entre $12.00 y $25.00</li>
+                <li>Mantén al menos 15 unidades durante temporada alta</li>
+                <li>Fragancias populares: coco, brisa marina, tropical</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.card-header.bg-info {
+    background: linear-gradient(135deg, #17a2b8, #138496) !important;
+}
+
+.form-control:focus {
+    border-color: #17a2b8;
+    box-shadow: 0 0 0 0.2rem rgba(23, 162, 184, 0.25);
+}
+
+.input-group-text {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+}
+
+.alert-light {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Validación en tiempo real
+document.addEventListener('DOMContentLoaded', function() {
+    const precioInput = document.getElementById('id_precio');
+    const cantidadInput = document.getElementById('id_cantidad');
+    
+    if (precioInput) {
+        precioInput.addEventListener('input', function() {
+            const valor = parseFloat(this.value);
+            if (valor < 0) {
+                this.setCustomValidity('El precio no puede ser negativo');
+            } else if (valor > 1000) {
+                this.setCustomValidity('El precio parece muy alto');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    }
+    
+    if (cantidadInput) {
+        cantidadInput.addEventListener('input', function() {
+            const valor = parseInt(this.value);
+            const feedback = this.parentElement.querySelector('.form-text');
+            
+            if (valor < 0) {
+                this.setCustomValidity('La cantidad no puede ser negativa');
+            } else {
+                this.setCustomValidity('');
+                
+                if (feedback) {
+                    if (valor <= 5) {
+                        feedback.innerHTML = '<i class="fas fa-exclamation-triangle text-danger"></i> Stock bajo - Considera reabastecer';
+                        feedback.className = 'form-text text-danger';
+                    } else if (valor <= 10) {
+                        feedback.innerHTML = '<i class="fas fa-info-circle text-warning"></i> Stock moderado';
+                        feedback.className = 'form-text text-warning';
+                    } else {
+                        feedback.innerHTML = '<i class="fas fa-check-circle text-success"></i> Excelente nivel de stock';
+                        feedback.className = 'form-text text-success';
+                    }
+                }
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

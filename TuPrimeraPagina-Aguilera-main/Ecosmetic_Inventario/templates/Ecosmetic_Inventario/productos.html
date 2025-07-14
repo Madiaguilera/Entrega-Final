@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Jabones {{ tipo|title }} - Ecosmetic Inventario{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>
+        <i class="fas fa-soap"></i> 
+        Jabones {% if tipo == 'frutales' %}🍊 Frutales{% elif tipo == 'florales' %}🌸 Florales{% else %}🏖️ Playeros{% endif %}
+    </h2>
+    {% if tipo == 'frutales' %}
+        <a href="{% url 'agregar_jabon_frutal' %}" class="btn btn-warning">
+            <i class="fas fa-plus"></i> Agregar Jabón Frutal
+        </a>
+    {% elif tipo == 'florales' %}
+        <a href="{% url 'agregar_jabon_floral' %}" class="btn btn-pink">
+            <i class="fas fa-plus"></i> Agregar Jabón Floral
+        </a>
+    {% else %}
+        <a href="{% url 'JabonPlayero_new' %}" class="btn btn-info">
+            <i class="fas fa-plus"></i> Agregar Jabón Playero
+        </a>
+    {% endif %}
+</div>
+
+{% if jabones %}
+<div class="row">
+    {% for jabon in jabones %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ jabon.nombre }}</h5>
+                <p class="card-text">
+                    <strong>Precio:</strong> ${{ jabon.precio }}<br>
+                    <strong>Cantidad:</strong> 
+                    <span class="badge {% if jabon.cantidad > 10 %}bg-success{% elif jabon.cantidad > 5 %}bg-warning{% else %}bg-danger{% endif %}">
+                        {{ jabon.cantidad }} unidades
+                    </span>
+                </p>
+            </div>
+            <div class="card-footer">
+                <div class="d-grid">
+                    <span class="btn btn-outline-primary btn-sm">ID: {{ jabon.id }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info text-center">
+    <i class="fas fa-info-circle fa-3x mb-3"></i>
+    <h4>No hay jabones {{ tipo }} registrados</h4>
+    <p>¡Comienza agregando tu primer jabón {{ tipo }}!</p>
+    {% if tipo == 'frutales' %}
+        <a href="{% url 'agregar_jabon_frutal' %}" class="btn btn-warning">
+            <i class="fas fa-plus"></i> Agregar Primer Jabón Frutal
+        </a>
+    {% elif tipo == 'florales' %}
+        <a href="{% url 'agregar_jabon_floral' %}" class="btn btn-pink">
+            <i class="fas fa-plus"></i> Agregar Primer Jabón Floral
+        </a>
+    {% else %}
+        <a href="{% url 'agregar_jabon_playero' %}" class="btn btn-info">
+            <i class="fas fa-plus"></i> Agregar Primer Jabón Playero
+        </a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
+

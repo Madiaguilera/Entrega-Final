@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.nombre }} - Detalle Jabón Playero - Ecosmetic Inventario{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-info text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-umbrella-beach"></i>
+                    Detalle del Jabón Playero
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="info-item mb-3">
+                            <label class="fw-bold text-muted">ID del Producto:</label>
+                            <p class="mb-0 fs-5">{{ object.id }}</p>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <label class="fw-bold text-muted">Nombre del Jabón:</label>
+                            <p class="mb-0 fs-4 text-primary">{{ object.nombre }}</p>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <label class="fw-bold text-muted">Precio:</label>
+                            <p class="mb-0 fs-3 text-success">
+                                <i class="fas fa-dollar-sign"></i>
+                                {{ object.precio }}
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="info-item mb-3">
+                            <label class="fw-bold text-muted">Cantidad en Stock:</label>
+                            <div class="d-flex align-items-center">
+                                <span class="badge fs-6 me-2 {% if object.cantidad > 10 %}bg-success{% elif object.cantidad > 5 %}bg-warning{% else %}bg-danger{% endif %}">
+                                    {{ object.cantidad }} unidades
+                                </span>
+                                {% if object.cantidad <= 5 %}
+                                    <i class="fas fa-exclamation-triangle text-warning" title="Stock bajo"></i>
+                                {% elif object.cantidad > 10 %}
+                                    <i class="fas fa-check-circle text-success" title="Stock suficiente"></i>
+                                {% else %}
+                                    <i class="fas fa-info-circle text-info" title="Stock moderado"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <label class="fw-bold text-muted">Estado del Stock:</label>
+                            <p class="mb-0">
+                                {% if object.cantidad > 10 %}
+                                    <span class="badge bg-success fs-6">Stock Alto</span>
+                                    <small class="text-muted d-block">Excelente disponibilidad</small>
+                                {% elif object.cantidad > 5 %}
+                                    <span class="badge bg-warning fs-6">Stock Medio</span>
+                                    <small class="text-muted d-block">Considerar reabastecimiento</small>
+                                {% else %}
+                                    <span class="badge bg-danger fs-6">Stock Bajo</span>
+                                    <small class="text-muted d-block">¡Reabastecer urgentemente!</small>
+                                {% endif %}
+                            </p>
+                        </div>
+                        
+                        <div class="info-item mb-3">
+                            <label class="fw-bold text-muted">Valor Total en Inventario:</label>
+                            <p class="mb-0 fs-4 text-info">
+                                <i class="fas fa-calculator"></i>
+                                ${{ object.precio|floatformat:2 }} × {{ object.cantidad }} = 
+                                <strong>${{ object.precio|mul:object.cantidad|floatformat:2 }}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barra de progreso del stock -->
+                <div class="mt-4">
+                    <label class="fw-bold text-muted mb-2">Nivel de Stock:</label>
+                    <div class="progress mb-2" style="height: 25px;">
+                        {% if object.cantidad <= 5 %}
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: {{ object.cantidad|mul:5 }}%;">
+                                {{ object.cantidad }} unidades
+                            </div>
+                        {% elif object.cantidad <= 10 %}
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: {{ object.cantidad|mul:5 }}%;">
+                                {{ object.cantidad }} unidades
+                            </div>
+                        {% else %}
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;">
+                                {{ object.cantidad }} unidades
+                            </div>
+                        {% endif %}
+                    </div>
+                    <small class="text-muted">Recomendado: mantener más de 10 unidades en stock</small>
+                </div>
+            </div>
+            
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <div class="btn-group">
+                        <a href="{% url 'JabonPlayero' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Volver a la Lista
+                        </a>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <a href="{% url 'JabonPlayero_edit' object.pk %}" class="btn btn-warning">
+                            <i class="fas fa-edit"></i> Editar
+                        </a>
+                        <a href="{% url 'JabonPlayero_delete' object.pk %}" class="btn btn-danger" 
+                           onclick="return confirm('¿Estás seguro de que quieres eliminar este jabón playero?')">
+                            <i class="fas fa-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Información adicional -->
+<div class="row mt-4">
+    <div class="col-md-8 mx-auto">
+        <div class="alert alert-info">
+            <h5 class="alert-heading">
+                <i class="fas fa-info-circle"></i>
+                Información sobre Jabones Playeros
+            </h5>
+            <p class="mb-0">
+                Los jabones playeros están especialmente formulados con fragancias marinas y veraniegas. 
+                Son ideales para la temporada de verano y tienen gran demanda durante los meses cálidos.
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.info-item label {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-header.bg-info {
+    background: linear-gradient(135deg, #17a2b8, #138496) !important;
+}
+
+.progress {
+    border-radius: 10px;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.1);
+}
+
+.progress-bar {
+    border-radius: 10px;
+    font-weight: bold;
+    line-height: 25px;
+}
+</style>
+{% endblock %}

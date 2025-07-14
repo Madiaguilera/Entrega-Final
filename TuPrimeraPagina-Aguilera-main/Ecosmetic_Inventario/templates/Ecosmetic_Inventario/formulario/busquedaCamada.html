@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar Jabón - Ecosmetic Inventario{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">
+                    <i class="fas fa-search"></i>
+                    Buscar Jabón por ID
+                </h3>
+            </div>
+            
+            <div class="card-body">
+                <div class="alert alert-info">
+                    <h5 class="alert-heading">
+                        <i class="fas fa-info-circle"></i>
+                        ¿Cómo funciona la búsqueda?
+                    </h5>
+                    <p class="mb-0">
+                        Ingresa el ID numérico del jabón que quieres encontrar. El sistema buscará automáticamente 
+                        en todas las categorías: jabones frutales, florales y playeros.
+                    </p>
+                </div>
+                
+                <form method="get" action="{% url 'buscar' %}" novalidate>
+                    <div class="mb-4">
+                        <label for="{{ form.id.id_for_label }}" class="form-label fw-bold">
+                            <i class="fas fa-hashtag text-primary"></i>
+                            {{ form.id.label }}
+                        </label>
+                        {{ form.id }}
+                        {% if form.id.errors %}
+                            <div class="text-danger mt-1">
+                                {% for error in form.id.errors %}
+                                    <small><i class="fas fa-exclamation-triangle"></i> {{ error }}</small>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Ingresa solo números (ej: 1, 15, 127)
+                        </small>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-search"></i>
+                            Buscar Jabón
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Búsqueda rápida por categorías -->
+                <div class="mt-4">
+                    <h5 class="text-center mb-3">O navega por categorías:</h5>
+                    <div class="row">
+                        <div class="col-md-4 mb-2">
+                            <a href="{% url 'listar_jabones_frutales' %}" class="btn btn-warning btn-sm w-100">
+                                <i class="fas fa-lemon"></i><br>
+                                Jabones Frutales
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="{% url 'listar_jabones_florales' %}" class="btn btn-pink btn-sm w-100">
+                                <i class="fas fa-flower"></i><br>
+                                Jabones Florales
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-2">
+                            <a href="{% url 'listar_jabones_playeros' %}" class="btn btn-info btn-sm w-100">
+                                <i class="fas fa-umbrella-beach"></i><br>
+                                Jabones Playeros
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Instrucciones adicionales -->
+        <div class="alert alert-light mt-4">
+            <h6 class="alert-heading">
+                <i class="fas fa-lightbulb text-warning"></i>
+                Consejos de Búsqueda
+            </h6>
+            <ul class="mb-0">
+                <li>Cada producto tiene un ID único que aparece en las listas</li>
+                <li>Puedes encontrar el ID en los detalles de cada jabón</li>
+                <li>Los IDs son números consecutivos (1, 2, 3, etc.)</li>
+                <li>Si no encuentras un ID, es posible que el producto haya sido eliminado</li>
+            </ul>
+        </div>
+        
+        <!-- Estadísticas rápidas -->
+        <div class="card bg-light mt-4">
+            <div class="card-header">
+                <h6 class="mb-0">
+                    <i class="fas fa-chart-bar"></i>
+                    Resumen del Inventario
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-4">
+                        <div class="border-end">
+                            <i class="fas fa-lemon text-warning fa-2x"></i>
+                            <h6 class="mt-2">Frutales</h6>
+                            <small class="text-muted">Ver lista completa</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="border-end">
+                            <i class="fas fa-flower text-pink fa-2x"></i>
+                            <h6 class="mt-2">Florales</h6>
+                            <small class="text-muted">Ver lista completa</small>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <i class="fas fa-umbrella-beach text-info fa-2x"></i>
+                        <h6 class="mt-2">Playeros</h6>
+                        <small class="text-muted">Ver lista completa</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Enlace al dashboard -->
+        <div class="text-center mt-4">
+            <a href="{% url 'inicio' %}" class="btn btn-secondary">
+                <i class="fas fa-home"></i>
+                Volver al Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.btn-pink {
+    background-color: #e83e8c;
+    border-color: #e83e8c;
+    color: white;
+}
+
+.btn-pink:hover {
+    background-color: #d91a72;
+    border-color: #d91a72;
+    color: white;
+}
+
+.text-pink {
+    color: #e83e8c !important;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #007bff, #0056b3) !important;
+}
+
+.form-control:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+}
+
+.border-end {
+    border-right: 1px solid #dee2e6;
+}
+
+@media (max-width: 768px) {
+    .border-end {
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+    }
+    
+    .col-4:last-child .border-end {
+        border-bottom: none;
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+}
+
+.alert-light {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('id_id');
+    const form = searchInput.closest('form');
+    
+    // Validación en tiempo real
+    searchInput.addEventListener('input', function() {
+        const value = this.value.trim();
+        
+        // Remover caracteres no numéricos
+        this.value = value.replace(/[^0-9]/g, '');
+        
+        // Validación
+        if (this.value && parseInt(this.value) <= 0) {
+            this.setCustomValidity('El ID debe ser un número mayor a 0');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+    
+    // Envío del formulario con Enter
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (this.value.trim()) {
+                form.submit();
+            }
+        }
+    });
+    
+    // Focus automático
+    searchInput.focus();
+    
+    // Placeholder dinámico
+    const placeholders = [
+        'Ingrese el ID del jabón...',
+        'Ej: 1, 5, 12...',
+        'Número de identificación...',
+        'ID del producto...'
+    ];
+    
+    let placeholderIndex = 0;
+    setInterval(function() {
+        if (!searchInput.value) {
+            searchInput.placeholder = placeholders[placeholderIndex];
+            placeholderIndex = (placeholderIndex + 1) % placeholders.length;
+        }
+    }, 3000);
+});
+</script>
+{% endblock %}
